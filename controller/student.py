@@ -16,3 +16,9 @@ def set_repository():
     """
     """
     repository = request.form['repository']
+
+@controller.route('/dashboard')
+def profile():
+    """
+    """
+    return ''

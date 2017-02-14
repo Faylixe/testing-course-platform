@@ -14,6 +14,9 @@ class Course(sql.Model):
     # Course name.
     name = sql.Column(sql.String(30))
 
+    # Course key.
+    key = sql.Column(sql.String(32))
+
     # Associated teacher id.
     teacher_id = sql.Column(sql.Integer, sql.ForeignKey('users.id'))
 
