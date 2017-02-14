@@ -1,2 +1,6 @@
 flask
+flask_sqlalchemy
 github-flask
+psycopg2
+requests
+gunicorn
