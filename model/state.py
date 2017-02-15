@@ -51,3 +51,32 @@ class PlatformState(sql.Model):
         state.value = value
         sql.add(state)
         sql.commit()
+
+class StateCache(object):
+    """Holder for the PlatformState value.
+    
+    Allows to only query database once to retrieve state value
+    and acts as value cache after first queried.
+    """
+
+    def __init__(self, key):
+        """Default constructor.
+        
+        :param key: Key of the value to hold.
+        """
+        self.key = key
+        self.value = None
+    
+    def get_value(self):
+        """
+        :returns:
+        """
+        if self.value is None:
+            self.value = PlatformState.get(self.key)
+        return self.value
+
+    def set_value(self, value):
+        """
+        """
+        self.value = value
+        PlatformState.put(self.key, value)
