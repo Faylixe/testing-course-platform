@@ -1,0 +1,22 @@
+{
+  "name": "testing-course-platform",
+  "homepage": "https://github.com/Faylixe/testing-course-platform",
+  "authors": [
+    "Faylixe <felix.voituret@gmail.com>"
+  ],
+  "description": "Web platform for testing course",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-social": "^5.1.1",
+    "bootstrap": "^3.3.7"
+  }
+}

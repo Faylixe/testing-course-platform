@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from __init__ import database as sql
+from model import database as sql
 
 class User(sql.Model):
     """ User ORM class. """

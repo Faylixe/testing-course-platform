@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
-from __init__ import database as sql
-
-# Consider using datastore ?
+from model import database as sql
 
 class PlatformState(sql.Model):
     """ Plateform state ORM class. """
@@ -23,12 +21,21 @@ class PlatformState(sql.Model):
         self.value = ''
 
     @staticmethod
+    def has(key):
+        """
+        :param key:
+        :returns:
+        """
+        state = PlatformState.query.filter_by(key=key).first()
+        return state is not None
+
+    @staticmethod
     def get(key):
         """
         :param key:
         :returns:
         """
-        state = PlateformState.query.filter_by(key=key).first()
+        state = PlatformState.query.filter_by(key=key).first()
         if state is not None:
             return state.value
 
@@ -38,9 +45,9 @@ class PlatformState(sql.Model):
         :param key:
         :param value:
         """
-        state = PlateformState.query.filter_by(key=key).first()
+        state = PlatformState.query.filter_by(key=key).first()
         if state is None:
-            state = PlateformState(key)
+            state = PlatformState(key)
         state.value = value
         sql.add(state)
         sql.commit()

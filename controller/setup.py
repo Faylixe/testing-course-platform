@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Blueprint, redirect, request, render_template, session, url_for
+from flask import Blueprint, render_template
 from common.github import github_client
 from model.state import PlatformState
 
@@ -12,19 +12,14 @@ def is_setup():
 
     :returns: True if this application already has been setup, False otherwise.
     """
-    return PlaformState.get('setup') == 'True'
+    return PlatformState.get('setup') == 'True'
     
 @controller.route('/')
 def index():
-    """
-    """
-    token = ''# TODO : Create token.
-    PlatformState.put('setup_token', token)
-    # TODO : Log token.
-    
-    return ''
+    """ Setup index page. """
+    return render_template('setup.html')
 
-
-def setup():
+def setup(token):
     """
     """
+    pass

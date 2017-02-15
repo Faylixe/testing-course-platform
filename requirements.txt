@@ -1,4 +1,5 @@
 flask
+flask-cdn
 flask_sqlalchemy
 github-flask
 psycopg2
