@@ -11,7 +11,7 @@ class User(sql.Model):
     # User identifier.
     id = sql.Column(sql.Integer, primary_key=True)
 
-    # User type (0 for registered or 1 for facebook)
+    # User type (0 for teacher or 1 for student)
     type = sql.Column(sql.Integer)
 
     # First name.

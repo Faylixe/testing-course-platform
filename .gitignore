@@ -89,3 +89,4 @@ ENV/
 .ropeproject
 
 /rds.secret
+/run_locally.sh

@@ -4,20 +4,43 @@ from __init__ import database as sql
 
 # Consider using datastore ?
 
-class PlateformState(sql.Model):
+class PlatformState(sql.Model):
     """ Plateform state ORM class. """
 
     # Associated table name.
     __tablename__ = 'plateform_state'
 
-    # User identifier.
-    id = sql.Column(sql.Integer, primary_key=True)
+    # Key.
+    key = sql.Column(sql.String(30), primary_key=True)
 
-    # Course name.
-    key = sql.Column(sql.String(30))
+    # Value.
+    value = sql.Column(sql.String(30))
 
-    # Associated teacher id.
-    value = sql.Column(sql.Integer, sql.ForeignKey('users.id'))
+    def __init__(key):
+        """
+        """
+        self.key = key
+        self.value = ''
 
-    # Associated teacher instance.
-    teacher = sql.relationship('User', backref=sql.backref('addresses', lazy='dynamic'))
+    @staticmethod
+    def get(key):
+        """
+        :param key:
+        :returns:
+        """
+        state = PlateformState.query.filter_by(key=key).first()
+        if state is not None:
+            return state.value
+
+    @staticmethod
+    def put(key, value):
+        """
+        :param key:
+        :param value:
+        """
+        state = PlateformState.query.filter_by(key=key).first()
+        if state is None:
+            state = PlateformState(key)
+        state.value = value
+        sql.add(state)
+        sql.commit()

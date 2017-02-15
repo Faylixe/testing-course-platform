@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
 from flask import Blueprint, redirect, request, render_template, session, url_for
-from main import github
+from common.github import github_client
+from model.state import PlatformState
 
 # Signup controller instance.
 controller = Blueprint('setup', __name__)
@@ -11,30 +12,16 @@ def is_setup():
 
     :returns: True if this application already has been setup, False otherwise.
     """
-    return False
+    return PlaformState.get('setup') == 'True'
     
 @controller.route('/')
 def index():
     """
     """
-    # TODO : Create token.
-    # TODO : Write token to config (DB or DS ?)
-    return ''
-
-@controller.route('/signup')
-def signup():
-    """
-    """
-    token = None # Retrieve.
-    # TODO : Check if token is valid.
-    return github.authorize()
-
-@application.route('/b')
-@github.authorized_handler
-def authorized(oauth_token):
-    """
-    :param oauth_token:
-    """
+    token = ''# TODO : Create token.
+    PlatformState.put('setup_token', token)
+    # TODO : Log token.
+    
     return ''
 
 
