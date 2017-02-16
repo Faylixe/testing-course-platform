@@ -10,3 +10,8 @@ class Exercice(sql.Model):
     name = sql.Column(sql.String(100))
     description = sql.Column(sql.Text)
     max_score = sql.Column(sql.Integer)
+
+    def __init__(self):
+        self.name = ''
+        self.description = ''
+        self.max_score = 0

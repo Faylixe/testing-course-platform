@@ -20,3 +20,10 @@ body { background-color: #505050; }
     font-weight: bold;
     color: lightgray;
 }
+
+.content {
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    padding: 10%;
+}

@@ -1,0 +1,26 @@
+{% extends "authenticated.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6">
+                <div class="content">
+                    <a class="btn btn-default" href="{{ url_for('teacher.edit_exercice') }}" role="button">Nouveau TP</a>
+                    <table class="table table-striped">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <td>Exercice</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for exercice in exercices %}
+                            <tr>
+                                <td><a href="{{ url_for('teacher.view_exercice', exercice_id=exercice.id) }}">{{ exercice.name }}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

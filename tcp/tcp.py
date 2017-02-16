@@ -4,11 +4,11 @@
 
 from os import environ as env
 from flask import Flask, redirect, render_template, session, url_for
+from flaskext.markdown import Markdown
 from common import github_client
 from common.access import get_current_user
 from model import configure_database
 from model.user import User
-
 # Configure target application.
 application = Flask(__name__, static_url_path='/static')
 application.secret_key = env['APPLICATION_SECRET_KEY']
@@ -22,6 +22,7 @@ application.app_context().push()
 # Configures application modules.
 configure_database(application)
 github_client.init_app(application)
+Markdown(application)
 
 @github_client.access_token_getter
 def get_github_token():

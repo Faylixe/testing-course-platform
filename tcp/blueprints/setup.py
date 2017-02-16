@@ -4,6 +4,8 @@
 
 from flask import Blueprint, render_template, request, redirect, session
 from common import github_client
+from model import database
+from model.exercice import Exercice
 from model.state import PlatformState, StateCache
 from model.user import User
 
@@ -43,11 +45,4 @@ def teacher():
     user = User.create(User.TEACHER, id, session['github_token'])
     session['current_user'] = id
     state_cache.set_value('1')
-    create_content()
     return redirect('/')
-
-def create_content():
-    """
-    """
-    # Write issues and exercice into database.
-    pass

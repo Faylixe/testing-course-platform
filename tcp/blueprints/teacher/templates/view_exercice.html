@@ -1,0 +1,36 @@
+{% extends "authenticated.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6">
+                <div class="content">
+                    <a class="btn btn-default" href="{{ url_for('teacher.edit_exercice', id=exercice.id) }}" role="button">Modifier</a>
+                    <div class="exercice-name">
+                        <h3>{{ exercice.name }}</h3>
+                    </div>
+                    <div class="exercice-description">
+                        <p>{% filter markdown %}{{ exercice.description }}{% endfilter %}</p>
+                    </div>
+                    <div class="exercice-score">
+                        <p class="text-success">Score : {{ exercice.max_score }}</p>
+                    </div>
+                    <a class="btn btn-default" href="{{ url_for('teacher.edit_issue', exercice_id=exercice.id) }}" role="button">Ajouter une issue</a>
+                    <table class="table table-striped">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <td>Issues</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for issue in issues %}
+                            <tr>
+                                <td><a href="{{ url_for('teacher.view_issue', exercice_id=exercice.id, issue_id=issue.id) }}">{{ exercice.name }}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
