@@ -3,8 +3,7 @@
 """ To document. """
 
 from flask import Blueprint, render_template, request, redirect, session
-from common.github import github_client
-from model import database
+from common import github_client
 from model.state import PlatformState, StateCache
 from model.user import User
 
@@ -27,7 +26,7 @@ def index():
     """ /setup endpoint """
     if is_setup():
         return redirect('/')
-    return render_template('signin.html', action='Setup')
+    return render_template('signin.html', action='Demarrer')
 
 @controller.route('/teacher')
 def teacher():
@@ -40,11 +39,8 @@ def teacher():
     """
     if is_setup():
         return redirect('/')
-    token = request.args['token']
-    user = User.create(User.TEACHER, token)
-    session['current_user'] = user.id
-    user.name = github_client.get('user')['login']
-    database.session.add(user)
-    database.session.commit()
+    id = github_client.get('user')['id']
+    user = User.create(User.TEACHER, id, session['github_token'])
+    session['current_user'] = id
     state_cache.set_value('1')
     return redirect('/')

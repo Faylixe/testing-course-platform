@@ -4,9 +4,10 @@
 
 from os import environ as env
 from flask import Flask, redirect, render_template, session, url_for
+from common import github_client
+from common.access import get_current_user
 from model import configure_database
 from model.user import User
-from common.github import github_client
 
 # Configure target application.
 application = Flask(__name__, static_url_path='/static')
@@ -22,6 +23,15 @@ application.app_context().push()
 configure_database(application)
 github_client.init_app(application)
 
+@github_client.access_token_getter
+def get_github_token():
+    """Github token access layer.
+
+    :returns: Access token of the current user if any, None otherwise.
+    """
+    if 'github_token' in session:
+        return session['github_token']
+
 # Registers controller of the application.
 from blueprints.setup import is_setup, controller as setup_controller
 from blueprints.teacher import controller as teacher_controller
@@ -30,7 +40,6 @@ application.register_blueprint(setup_controller, url_prefix='/setup')
 application.register_blueprint(teacher_controller, url_prefix='/teacher')
 
 @application.route('/')
-@application.route('/index')
 def index():
     """ /index endpoint.
     
@@ -41,17 +50,14 @@ def index():
     if is_setup():
         user = get_current_user()
         if user is None:
-            return render_template('signin.html', action='Signin')
-        return render_template('dashboard.html', user=user)
+            return render_template('signin.html', action='Se connecter')
+        if user.type == User.TEACHER:
+            return redirect(url_for('teacher.dashboard'))
+        elif user.type == User.STUDENT:
+            return ''
+        else:
+            return ''
     return redirect(url_for('setup.index'))
-
-def get_current_user():
-    """Simple sugar method for retrieving current user instance if any.
-
-    :returns: Current user if any, None otherwise.
-    """
-    if 'current_user' in session:
-        return User.query.filter_by(id=session['current_user']).first()
 
 @application.route('/signin')
 def signin():
@@ -75,24 +81,22 @@ def authorize(token):
     if token is None:
         application.logger.error('GitHub OAuth access token not provided')
         return redirect(url_for('.index'))
+    session['github_token'] = token
     if not is_setup():
-        return redirect(url_for('setup.teacher', token=token))
-    user = User.get(token)
-    user.token = token
-    database.session.commit()
-    session['current_user'] = user.id
-    return redirect('.index')
+        return redirect(url_for('setup.teacher'))
+    id = github_client.get('user')['id']
+    session['current_user'] = id
+    user = User.get(id, token)
+    return redirect(url_for('.index'))
 
-@github_client.access_token_getter
-def get_github_token():
-    """Github token access layer.
+@application.route('/signout')
+def signout():
+    """ /signout endpoint.
 
-    :returns: Access token of the current user if any, None otherwise.
+    Logout current user and redirect to index.
     """
-    user = get_current_user()
-    print('Current user : %s' % user.id)
-    if user is not None:
-        return user.token
+    session['current_user'] = None
+    return redirect(url_for('.index'))
 
 if __name__ == '__main__':
     application.run(debug=True)

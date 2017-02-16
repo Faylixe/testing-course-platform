@@ -8,11 +8,11 @@ from common.access import get_current_user, restricted
 from model.user import User
 
 # Backend controller instance.
-controller = Blueprint('teacher', __name__, template_folder='templates')
+controller = Blueprint('student', __name__, template_folder='templates')
 
 @restricted
 @controller.route('/dashboard')
 def dashboard():
-    """ /teacher endpoint """
+    """ /student endpoint """
     # TODO : Retrieve metadata.
     return render_template('dashboard.html', current=get_current_user())
