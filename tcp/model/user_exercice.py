@@ -12,6 +12,7 @@ class UserExercice(sql.Model):
     user = sql.relationship('User', backref=sql.backref('user_exercices', lazy='dynamic'))
     status = sql.Column(sql.Integer)
     score = sql.Column(sql.Integer)
+    comment = sql.Text(100)
 
     LOCKED = 0
 

@@ -43,4 +43,11 @@ def teacher():
     user = User.create(User.TEACHER, id, session['github_token'])
     session['current_user'] = id
     state_cache.set_value('1')
+    create_content()
     return redirect('/')
+
+def create_content():
+    """
+    """
+    # Write issues and exercice into database.
+    pass

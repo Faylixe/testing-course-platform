@@ -8,4 +8,5 @@ class Exercice(sql.Model):
     __tablename__ = 'exercices'
     id = sql.Column(sql.Integer, primary_key=True)
     name = sql.Column(sql.String(100))
+    description = sql.Column(sql.Text)
     max_score = sql.Column(sql.Integer)
