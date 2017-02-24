@@ -27,3 +27,7 @@ body { background-color: #505050; }
     border-radius: 20px;
     padding: 10%;
 }
+
+.table-menu td {
+    padding-left: 5px;
+}

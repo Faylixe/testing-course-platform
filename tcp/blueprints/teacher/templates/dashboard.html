@@ -4,11 +4,11 @@
         <div class="row">
             <div class="col-sm-offset-3 col-sm-6">
                 <div class="content">
-                    <h3>Welcome {{ current.name }}</h3><br/>
-                    <table>
+                    <h3>Bienvenue {{ current.name }}</h3><br/>
+                    <table class="table-menu">
                         <tr>
                             <td><i class="fa fa-database" aria-hidden="true"></i></td>
-                            <td>Exercice</td>
+                            <td><a href="{{ url_for('teacher.view_exercice') }}">Exercice</a></td>
                         </tr>
                         <tr>
                             <td><i class="fa fa-user" aria-hidden="true"></i></td>
