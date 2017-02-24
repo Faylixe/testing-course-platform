@@ -7,22 +7,20 @@ from flask import session, redirect, url_for
 from blueprints.setup import is_setup
 from model.user import User
 
-def teacher_restricted():
+def teacher_restricted(function):
     """Decorator function for page that required signed in users.
 
     :param previous: Page to redirect in case of failure.
     :returns: Decorated function.
     """
-    def decorator(function):
-        @wraps(function)
-        def decorated(*args, **kwargs):
-            if is_setup():
-                user = get_current_user()
-                if user is not None and user.type == User.TEACHER:
-                    return function(*args, **kwargs)
-            return redirect('/')
-        return decorated
-    return decorator
+    @wraps(function)
+    def decorated(*args, **kwargs):
+         if is_setup():
+             user = get_current_user()
+             if user is not None and user.type == User.TEACHER:
+                return function(*args, **kwargs)
+         return redirect('/')
+    return decorated
 
 def student_restricted():
     """Decorator function for page that required signed in users.

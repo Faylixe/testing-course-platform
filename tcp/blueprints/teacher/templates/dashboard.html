@@ -1,4 +1,22 @@
 {% extends "authenticated.html" %}
 {% block content %}
-
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6">
+                <div class="content">
+                    <h3>Welcome {{ current.name }}</h3><br/>
+                    <table>
+                        <tr>
+                            <td><i class="fa fa-database" aria-hidden="true"></i></td>
+                            <td>Exercice</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-user" aria-hidden="true"></i></td>
+                            <td>Student</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

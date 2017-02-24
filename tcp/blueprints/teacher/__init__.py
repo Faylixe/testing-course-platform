@@ -13,16 +13,16 @@ from model.user import User
 # Backend controller instance.
 controller = Blueprint('teacher', __name__, template_folder='templates')
 
-@teacher_restricted
 @controller.route('/dashboard')
+@teacher_restricted
 def dashboard():
     """ /teacher/dashboard endpoint """
     # TODO : Retrieve metadata.
     return render_template('dashboard.html', current=get_current_user())
 
-@teacher_restricted
 @controller.route('/exercice')
 @controller.route('/exercice/<int:exercice_id>')
+@teacher_restricted
 def view_exercice(exercice_id=None):
     """ /teacher/exercice endpoint
 
@@ -34,9 +34,9 @@ def view_exercice(exercice_id=None):
         return render_template('view_exercice.html', current=get_current_user(), exercice=exercice, issues=issues)
     return render_template('list_exercice.html', current=get_current_user(), exercices=Exercice.query.all())
 
-@teacher_restricted
 @controller.route('/exercice/edit', methods=['GET', 'POST'])
 @controller.route('/exercice/edit/<int:exercice_id>', methods=['GET', 'POST'])
+@teacher_restricted
 def edit_exercice(exercice_id=None):
     """ /teacher/exercice/edit endpoint
     
@@ -54,8 +54,8 @@ def edit_exercice(exercice_id=None):
         return redirect(url_for('.view_exercice'))
     return render_template('edit_exercice.html', current=get_current_user(), exercice=exercice)
 
-@teacher_restricted
 @controller.route('/exercice/<int:exercice_id>/issue/<int:issue_id>')
+@teacher_restricted
 def view_issue(exercice_id, issue_id):
     """ /teacher/exercice/<exercice_id>/issue/<issue_id> endpoint
 
@@ -64,9 +64,9 @@ def view_issue(exercice_id, issue_id):
     issue = ExerciceIssue.query.filter_by(id=issue_id, exercice_id=exercice_id).first_or_404()
     return render_template('view_issue.html', current=get_current_user(), issue=issue)
     
-@teacher_restricted
 @controller.route('/exercice/<int:exercice_id>/issue/edit', methods=['GET', 'POST'])
 @controller.route('/exercice/<int:exercice_id>/issue/edit/<int:issue_id>', methods=['GET', 'POST'])
+@teacher_restricted
 def edit_issue(exercice_id, issue_id=None):
     """ /teacher/exercice/<exercice_id>/issue/edit endpoint
     
