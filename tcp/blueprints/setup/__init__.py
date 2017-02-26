@@ -20,14 +20,14 @@ teacher_cache = StateCache(TEACHER_KEY)
 repository_cache = StateCache(REPOSITORY_KEY)
 
 def is_repository_setup():
-    """
+    """Indicates if base repository is setup or not.
     """
     return repository_cache.get_value() is not None
 
 def is_teacher_setup():
+    """Indicates if application teacher role is setup or not.
     """
-    """
-    return teacher_cache.get_value() == '1' 
+    return teacher_cache.get_value() is not None
 
 def is_setup():
     """Indicates if this application is setup or not.

@@ -9,7 +9,7 @@
                         {% for repository in repositories %}
                             <tr>
                                 <td><i class="fa fa-bookmark" aria-hidden="true"></i></td>
-                                <td><a href="#">{{ repository.name }}</a></td>
+                                <td><a href="{{ url_for('setup.repository', repository_name=repository.name) }}">{{ repository.name }}</a></td>
                             </tr>
                         {% endfor %}
                     </table>
