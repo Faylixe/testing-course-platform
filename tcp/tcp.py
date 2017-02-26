@@ -36,9 +36,11 @@ def get_github_token():
 # Registers controller of the application.
 from blueprints.setup import is_setup, controller as setup_controller
 from blueprints.teacher import controller as teacher_controller
+from blueprints.student import controller as student_controller
 
 application.register_blueprint(setup_controller, url_prefix='/setup')
 application.register_blueprint(teacher_controller, url_prefix='/teacher')
+application.register_blueprint(student_controller, url_prefix='/student')
 
 @application.route('/')
 def index():
@@ -55,7 +57,7 @@ def index():
         if user.type == User.TEACHER:
             return redirect(url_for('teacher.dashboard'))
         elif user.type == User.STUDENT:
-            return ''
+            return redirect(url_for('student.dashboard'))
         else:
             return ''
     return redirect(url_for('setup.index'))

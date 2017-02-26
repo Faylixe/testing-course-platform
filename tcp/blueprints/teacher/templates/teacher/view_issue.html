@@ -1,0 +1,19 @@
+{% extends "authenticated.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6">
+                <div class="content">
+                    <a class="btn btn-default" href="{{ url_for('teacher.edit_issue', issue_id=issue.id, exercice_id=issue.exercice_id) }}" role="button">Modifier</a>
+                    <hr></hr>
+                    <div class="exercice-name">
+                        <h3>{{ issue.name }}</h3>
+                    </div>
+                    <div class="exercice-description">
+                        <p>{% filter markdown %}{{ issue.description }}{% endfilter %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

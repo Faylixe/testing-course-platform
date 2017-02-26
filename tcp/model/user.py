@@ -40,7 +40,7 @@ class User(sql.Model):
         """
         user = User.query.filter_by(github_id=github_id).first()
         if user is None:
-            user = User.create(User.STUDENT, id, token)
+            user = User.create(User.STUDENT, github_id, token)
             sql.session.add(user)
             sql.session.commit()
         return user

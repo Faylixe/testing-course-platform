@@ -1,0 +1,20 @@
+{% extends "authenticated.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-6">
+                <div class="content">
+                    <h6><p class="text-muted">Veuillez selectionner un <b>repository</b> comme base d'exercice :</p></h6>
+                    <table class="table-menu">
+                        {% for repository in repositories %}
+                            <tr>
+                                <td><i class="fa fa-bookmark" aria-hidden="true"></i></td>
+                                <td><a href="#">{{ repository.name }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

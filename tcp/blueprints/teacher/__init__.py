@@ -18,7 +18,7 @@ controller = Blueprint('teacher', __name__, template_folder='templates')
 def dashboard():
     """ /teacher/dashboard endpoint """
     # TODO : Retrieve metadata.
-    return render_template('dashboard.html', current=get_current_user())
+    return render_template('teacher/dashboard.html', current=get_current_user())
 
 @controller.route('/exercice')
 @controller.route('/exercice/<int:exercice_id>')
@@ -31,8 +31,8 @@ def view_exercice(exercice_id=None):
     if exercice_id is not None:
         exercice = Exercice.query.filter_by(id=exercice_id).first_or_404()
         issues = ExerciceIssue.query.filter_by(exercice_id=exercice_id).all()
-        return render_template('view_exercice.html', current=get_current_user(), exercice=exercice, issues=issues)
-    return render_template('list_exercice.html', current=get_current_user(), exercices=Exercice.query.all())
+        return render_template('teacher/view_exercice.html', current=get_current_user(), exercice=exercice, issues=issues)
+    return render_template('teacher/list_exercice.html', current=get_current_user(), exercices=Exercice.query.all())
 
 @controller.route('/exercice/edit', methods=['GET', 'POST'])
 @controller.route('/exercice/edit/<int:exercice_id>', methods=['GET', 'POST'])
@@ -52,7 +52,7 @@ def edit_exercice(exercice_id=None):
         database.session.add(exercice)
         database.session.commit()
         return redirect(url_for('.view_exercice'))
-    return render_template('edit_exercice.html', current=get_current_user(), exercice=exercice)
+    return render_template('teacher/edit_exercice.html', current=get_current_user(), exercice=exercice)
 
 @controller.route('/exercice/<int:exercice_id>/issue/<int:issue_id>')
 @teacher_restricted
@@ -62,7 +62,7 @@ def view_issue(exercice_id, issue_id):
     :param id: Optional identifier of the issue to display.
     """
     issue = ExerciceIssue.query.filter_by(id=issue_id, exercice_id=exercice_id).first_or_404()
-    return render_template('view_issue.html', current=get_current_user(), issue=issue)
+    return render_template('teacher/view_issue.html', current=get_current_user(), issue=issue)
     
 @controller.route('/exercice/<int:exercice_id>/issue/edit', methods=['GET', 'POST'])
 @controller.route('/exercice/<int:exercice_id>/issue/edit/<int:issue_id>', methods=['GET', 'POST'])
@@ -72,12 +72,14 @@ def edit_issue(exercice_id, issue_id=None):
     
     :param id: Optional identifier of the issue to edit.
     """
-    issue = ExerciceIssue()
+    issue = ExerciceIssue(exercice_id)
     if issue_id is not None:
         issue = ExerciceIssue.query.filter_by(id=issue_id, exercice_id=exercice_id).first_or_404()
     if request.method == 'POST':
-        # TODO : Get issue values.
+        issue.exercice_id = exercice_id
+        issue.name = request.form.get('name')
+        issue.description = request.form.get('description')
         database.session.add(issue)
         database.session.commit()
         return redirect(url_for('.view_exercice', exercice_id=exercice_id))
-    return render_template('edit_issue.html', current=get_current_user(), issue=issue)
+    return render_template('teacher/edit_issue.html', current=get_current_user(), issue=issue)

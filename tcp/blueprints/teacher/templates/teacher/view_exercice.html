@@ -29,7 +29,7 @@
                             <tbody>
                                 {% for issue in issues %}
                                 <tr>
-                                    <td><a href="{{ url_for('teacher.view_issue', exercice_id=exercice.id, issue_id=issue.id) }}">{{ exercice.name }}</a></td>
+                                    <td><a href="{{ url_for('teacher.view_issue', exercice_id=exercice.id, issue_id=issue.id) }}">{{ issue.name }}</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

@@ -22,22 +22,20 @@ def teacher_restricted(function):
          return redirect('/')
     return decorated
 
-def student_restricted():
+def student_restricted(function):
     """Decorator function for page that required signed in users.
 
     :param previous: Page to redirect in case of failure.
     :returns: Decorated function.
     """
-    def decorator(function):
-        @wraps(function)
-        def decorated(*args, **kwargs):
-            if is_setup():
-                user = get_current_user()
-                if user is not None and user.type == User.STUDENT:
-                    return function(*args, **kwargs)
-            return redirect('/')
-        return decorated
-    return decorator
+    @wraps(function)
+    def decorated(*args, **kwargs):
+        if is_setup():
+            user = get_current_user()
+            if user is not None and user.type == User.STUDENT:
+                return function(*args, **kwargs)
+        return redirect('/')
+    return decorated
 
 def get_current_user():
     """Simple sugar method for retrieving current user instance if any.

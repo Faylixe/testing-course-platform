@@ -11,3 +11,8 @@ class ExerciceIssue(sql.Model):
     exercice = sql.relationship('Exercice', backref=sql.backref('exercice_issues', lazy='dynamic'))
     name = sql.Column(sql.String(100))
     description = sql.Column(sql.Text)
+
+    def __init__(self, exercice_id):
+        self.id = ExerciceIssue.query.filter_by(exercice_id=exercice_id).count() # Consider using fast count. # TODO : Protect againt conflict.
+        self.name = ''
+        self.description = ''

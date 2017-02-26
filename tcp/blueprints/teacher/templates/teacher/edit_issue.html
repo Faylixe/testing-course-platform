@@ -1,0 +1,22 @@
+{% extends "authenticated.html" %}
+{% block content %}
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-offset-3 col-sm-6">
+            <div class="content">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="name">Nom</label>
+                        <input type="text" class="form-control" placeholder="Nom de l'issue" name="name" value="{{ issue.name }}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" placeholder="Description" rows="3" name="description">{{ issue.description }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-default">Sauvegarder</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
