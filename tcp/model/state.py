@@ -2,6 +2,10 @@
 
 from model import database as sql
 
+TEACHER_KEY = 'setup_teacher'
+
+REPOSITORY_KEY = 'setup_repository'
+
 class PlatformState(sql.Model):
     """ Plateform state ORM class. """
 

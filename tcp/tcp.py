@@ -9,6 +9,8 @@ from common import github_client
 from common.access import get_current_user
 from model import configure_database
 from model.user import User
+from model.state import TEACHER_KEY, REPOSITORY_KEY
+
 # Configure target application.
 application = Flask(__name__, static_url_path='/static')
 application.secret_key = env['APPLICATION_SECRET_KEY']
@@ -89,7 +91,13 @@ def authorize(token):
         return redirect(url_for('setup.teacher'))
     id = github_client.get('user')['id']
     session['current_user'] = id
-    user = User.get(id, token)
+    user, created = User.get(id, token)
+    if created:
+        # TODO : Ensure repository does not exists ?
+        owner = PlatformState.get(TEACHER_KEY)
+        repository = PlatformState.get(REPOSITORY_KEY)
+        response = github_client.post('/repos/%s/%s/fork' % (owner, repository))
+        # TODO : Check response.
     return redirect(url_for('.index'))
 
 @application.route('/signout')
