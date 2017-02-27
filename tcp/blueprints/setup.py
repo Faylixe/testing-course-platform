@@ -59,7 +59,7 @@ def teacher():
     id = github_client.get('user')['id']
     user = User.create(User.TEACHER, id, session['github_token'])
     session['current_user'] = id
-    teacher_cache.set_value('1')
+    teacher_cache.set_value(user.name)
     return redirect(url_for('setup.repository'))
 
 # Filters for repository selection.
@@ -80,4 +80,4 @@ def repository(repository_name=None):
         # TODO : Ensure repository exists (security purpose).
         repository_cache.set_value(repository_name)
         return redirect('/')
-    return render_template('setup/list_repositories.html', current=teacher, repositories=repositories)
+    return render_template('list_repositories.html', current=teacher, repositories=repositories)
